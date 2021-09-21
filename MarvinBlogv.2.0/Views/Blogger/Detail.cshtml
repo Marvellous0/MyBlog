@@ -1,0 +1,96 @@
+﻿@model MarvinBlogv._2._0.DTO.PostDTo
+
+@if (ViewBag.Role == "SuperAdmin")
+{
+    Layout = "_AdminDashboardLayout";
+}
+else
+{
+    Layout = "BloggerDashboard";
+}
+@{ 
+    ViewData["Title"] = "Post Detail";
+
+}
+
+
+<div class="container">
+    <span style="font-size:50px; color:grey"><i class="fas fa-user-circle"></i></span> <span style="font-size:30px"
+        class="font-weight-bold">@ViewBag.name</span>
+    <br /><br /><br />
+    <hr />
+
+    @if (Model.PosterRole == "SuperAdmin" && ViewBag.Role == "SuperAdmin")
+    {
+                <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <span 
+        style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+        class="font-weight-bold">Me <span style=" color:deepskyblue; font-size:15px"><i class="fas fa-check-circle"></i></span></span>
+    }
+
+
+    else if (Model.PosterRole == "SuperAdmin")
+    {
+                 <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <span 
+        style="font-size:15px; margin-right: 5px;text-decoration:none; color:black"
+        class="font-weight-bold">ADMIN</span><span style=" color:deepskyblue; font-size:15px"><i class="fas fa-check-circle"></i></span>
+    }
+
+    else
+    {
+                 <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@Model.Created"
+        style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+        class="font-weight-bold">@Model.PosterFullName</a>
+    }
+
+
+    @if (Model.CreatedBy != ViewBag.email && ViewBag.Role != "SuperAdmin" && Model.PosterRole != "SuperAdmin")
+    {
+        if (Model.IsFollowing == false)
+        {
+            <span style="border-radius:20px; border-bottom:10px;" class="btn btn-primary float-right">Follow</span>
+    }
+
+    }
+    @if (Model.IsFollowing == true && ViewBag.Role != "SuperAdmin" && Model.PosterRole != "SuperAdmin")
+    {
+
+        <div style="color:grey; margin-left:30px; margin-top:-1%;font-size:15px; font-family:'Times New Roman'">
+            <i
+                class="fas fa-dot-circle"></i> Following</div>
+    }
+
+
+    <h2 class="text-center font-weight-bold" style="font-family:'Times New Roman'">@Model.PostTitle</h2>
+    <img style="width:80%; height:500px; margin-left:15%" src="@WC.PostImagePath@Model.ImageUrl"
+         alt="image not found"/>
+    <div>
+        <br/>
+        <h5 class="text-center">@Model.Description</h5>
+        <br/>
+        <div class="container" style="margin-left: 12%">
+            <span>@Html.Raw(@Model.Content)</span>
+        </div>
+
+    </div><br/>
+    <span style="margin-left: 20px; cursor: pointer" onclick="addLikes(@Model.Id)">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+    </span>
+    <span class="font-weight-bold" id=@($"post_likes_{Model.Id}")>@Model.Like</span> |
+    <a
+        asp-controller="Review" asp-action="LikeList" asp-route-id="@Model.Id"> Details</a>
+    <span style="margin-left:20px; color:slategrey"
+      ><i class="fa fa-comment-alt" aria-hidden="true"></i></span>
+    <span style="margin-left:10px"
+          class="font-weight-bold">@Model.CommentCount</span> | <a asp-controller="Review" asp-action="GetReviewList" asp-route-Id="@Model.Id"> Details</a>
+    <form method="post">
+        <input value="@Model.Id" hidden asp-for="Id"/>
+        <textarea asp-for="Comment"
+            style="margin-left:30px; margin-top: 20px; border-radius:10px; height:40px; width:400px"
+            placeholder="Add Comment...."></textarea>
+        <input style="margin-left:10px; margin-top:-30px"
+               class="btn btn-outline-secondary" type="submit" value="Add Comment"/>
+    </form>
+    <br/>
+    <hr/><br/>
+
+</div>

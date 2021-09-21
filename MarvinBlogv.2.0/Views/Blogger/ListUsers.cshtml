@@ -1,0 +1,42 @@
+﻿@model List<MarvinBlogv._2._0.Models.ViewModel.ListUserVM>
+
+@if (ViewBag.Role == "SuperAdmin")
+{
+    Layout = "_AdminDashboardLayout";
+}
+else
+{
+    Layout = "BloggerDashboard";
+}
+
+<div class="container">
+
+    <form asp-action="ListUsers" method="get" >
+
+            <input class="form-control col-md-10" style="margin-bottom:5%" type="search" placeholder="Search Blogger" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-outline-secondary" /> |
+            <a style="color:darkred" asp-action="Index">All Bloggers</a>
+
+        </form>
+
+    @foreach (var user in Model)
+    {
+        <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a class="font-weight-bolder" asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@user.Id"
+        style="font-size:20px; text-decoration:none; color:black" >@user.FullName</a>
+          @if (user.IsFollowing == false && ViewBag.Role != "SuperAdmin")
+                {
+                    <a style="border-radius:20px; border-bottom:10px; cursor: pointer" onclick="addFollowersFromListUsers(@user.Id)" class="btn btn-primary float-right">Follow</a>
+
+                }
+                else if(user.IsFollowing == true && ViewBag.Role != "SuperAdmin")
+                {
+                     <div style="color:grey; margin-left:30px; margin-top:-1%;font-size:15px; font-family:'Times New Roman'"><i
+                class="fas fa-dot-circle"></i> Following</div>
+                }
+          <br />
+          <span style="color:darkgrey; margin-left:30px">@user.Email</span>
+          <br /><hr /><br/>
+     }
+
+
+</div>

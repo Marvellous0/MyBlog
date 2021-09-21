@@ -1,0 +1,142 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MarvinsBlog</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/sidenav/sidenav.css" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/summernote-0.8.18-dist/summernote-bs4.css" />
+    <link rel="stylesheet" href="~/summernote-0.8.18-dist/summernote-bs4.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib//bootstrap/dist/css/bootstrap-select.css" />
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold " asp-area="" asp-controller="Home" asp-action="Index">Marvins</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                    <ul class="navbar-nav ml-auto nav-flex-icons">
+
+                       
+                        <li class="nav-item">
+                            <a asp-controller="User" asp-action="Login" class="nav-link waves-effect waves-light font-weight-bold">
+                                Login <i class="fas fa-sign-in-alt"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="User" asp-action="Register" class="nav-link waves-effect waves-light font-weight-bold">
+                                <i class="fas fa-user"></i> Sign Up
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--/.Navbar -->
+    </header>
+
+
+
+
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <!--/. Sidebar navigation -->
+    @*</footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/mdb.min.js"></script>
+    <script src="~/fontawesome/js/all.min.js"></script>
+    <script src="~/summernote-0.8.18-dist/summernote.min.js"></script>
+    <script src="~/summernote-0.8.18-dist/summernote-bs4.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-select.min.js"></script>
+    <script src="~/js/darkmode.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $('select').selectpicker();
+    </script>
+
+    <script>
+
+    $("#summernote").summernote({
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: true,                  // set focus to editable area after initializing summernote
+        callbacks: {
+            onImageUpload: function (files) {
+                for (let i = 0; i < files.length; i++) {
+                    UploadImage(files[i]);
+                }
+            }
+        }
+    });
+
+
+    function UploadImage(file) {
+        var url = '@Url.Action("UploadFile", "Post")';
+
+        formData = new FormData();
+        formData.append("aUploadedFile", file);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (FileUrl) {
+               // alert(FileUrl);
+                var imgNode = document.createElement('img');
+                imgNode.src = FileUrl;
+                $('#summernote').summernote('insertNode', imgNode);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    }
+    </script>
+
+</body>
+
+</html>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".button-collapse").sideNav2();
+            var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+            var ps = new PerfectScrollbar(sideNavScrollbar);
+        });
+    </script>
+
+}
+
+
+
+

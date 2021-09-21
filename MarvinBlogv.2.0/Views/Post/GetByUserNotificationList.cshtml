@@ -1,0 +1,84 @@
+﻿@model List<MarvinBlogv._2._0.Models.ViewModel.NotificationList>
+
+@{
+    Layout = "BloggerDashboard";
+}
+
+
+<div class="container">
+    <br />
+    <h2 class="text-center font-weight-bold " style="font-family:'Times New Roman'">Notifications(<span style="color:grey">@ViewBag.NotificationCount</span>)</h2>
+    <br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table  table-hover">
+
+            @foreach (var notification in Model)
+            {
+                <tr style="font-family:'Times New Roman'">
+                    @if (notification.Type == "Follow")
+                    {
+
+                        <td href="#">
+                            <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@notification.CreatedBy"><i style="font-size:40px; margin-left: 20px; color:grey" class="fas fa-user-circle"></i></a>
+                        </td>
+
+
+                        <td>
+                            <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@notification.CreatedBy" style="color:black; text-decoration:none"><span class="font-weight-bolder">@notification.Message</span></a>
+                        </td>
+
+                    }
+                    else if (notification.Type == "Like")
+                    {
+                        <td href="#">
+                            <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@notification.CreatedBy"><i style="font-size:40px; margin-left: 20px; color:grey" class="fas fa-user-circle"></i></a>
+                        </td>
+
+
+                        <td>
+                            <a asp-controller="Review" asp-action="LikeList" asp-route-id="@notification.PostId" style="color:black; text-decoration:none"><span class="font-weight-bolder">@notification.Message</span></a>
+                        </td>
+                    }
+                    else if (notification.Type == "Comment")
+                    {
+                        <td href="#">
+                            <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@notification.CreatedBy"><i style="font-size:40px; margin-left: 20px; color:grey" class="fas fa-user-circle"></i></a>
+                        </td>
+
+
+                        <td>
+                            <a asp-controller="Review" asp-action="GetReviewList" asp-route-id="@notification.PostId" style="color:black; text-decoration:none"><span class="font-weight-bolder">@notification.Message</span></a>
+                        </td>
+                    }
+                    else if (notification.Type == "ApprovePost")
+                    {
+                        <td href="#">
+                            <a asp-controller="Blogger" asp-action="Detail" asp-route-id="@notification.PostId"> <img style="width:100%; height:50px;" src="@WC.PostImagePath@notification.ImageURL" /></a>
+                        </td>
+
+
+                        <td>
+                            <a asp-controller="Blogger" asp-action="Detail" asp-route-id="@notification.PostId" style="color:black; text-decoration:none"><span class="font-weight-bolder">@notification.Message</span></a>
+                        </td>
+                    }
+                    <td>
+                        <a asp-controller="Post" asp-action="DeleteNotification" asp-route-id="@notification.Id" class="btn" style="background-color:greenyellow; color:white"><i class="fas fa-check"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    }
+    else
+    {
+        <h4 class="text-center font-weight-bold font-italic" style="color:grey; margin-top:150px">No Notifications yet!!!</h4>
+    }
+
+
+</div>
+
+
+

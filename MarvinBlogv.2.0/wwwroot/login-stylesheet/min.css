@@ -1,0 +1,94 @@
+﻿* {
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+    font-weight: bold;
+}
+
+body {
+    background: url('https://mldvwwasb8tu.i.optimole.com/5CC9Lzs.tb2a~61eeb/w:1400/h:933/q:90/https://travelaway.me/wp-content/uploads/2020/09/detroit-mi-skyline.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.fa {
+    color: black;
+    font-size: 40px;
+}
+
+.container {
+    width: 40%;
+    margin: 80px auto;
+    background: linear-gradient(to top, rgba(255,255,255, 0.7), rgba(255,255,255, 0.3) );
+    height: auto;
+    border-radius: 10px;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    box-shadow: 0 7px 15px rgba(0,0,0,0.4);
+}
+
+    .container > .head_img {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+        .container > .head_img > img {
+            width: 30%;
+            height: auto;
+            margin: 10px auto;
+        }
+
+
+
+form > .input {
+    display: flex;
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 10px;
+    margin: 20px auto;
+}
+
+    form > .input > input {
+        border: none;
+        background: transparent;
+        padding: 0 20px;
+        font-size: 18px;
+        color: black;
+    }
+
+        form > .input > input:focus {
+            outline: none;
+        }
+
+.remember_me {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.login {
+    width: 30%;
+    margin: 20px auto;
+    background: white;
+    padding: 10px 0;
+    font-size: 18px;
+    color: rgb(60,60,60);
+    text-align: center;
+    font-weight: bold;
+    border-radius: 34px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.6);
+}
+
+@media only screen and (max-width: 500px) {
+    .container {
+        width: 80%;
+    }
+
+    .login {
+        width: 200px;
+    }
+
+    .container > .head_img > img {
+        width: 50%;
+    }
+}

@@ -1,0 +1,59 @@
+﻿@model MarvinBlogv._2._0.Models.ViewModel.UpdatePostViewModel
+
+@{
+    Layout = "BloggerDashboard";
+    ViewBag.Title = "Update Post";
+}
+
+<div class="row justify-content-center">
+
+    <div class="card">
+        <div class="card-header">
+            <h1>Update Post</h1>
+        </div>
+
+        @if (Model.Status == false)
+        {
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <input asp-for="Title" placeholder="Update Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <textarea asp-for="Description" placeholder="Update Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class=form-group>
+            <div class=form-row col-md-12>
+                <textarea asp-for="Content" id="summernote" name="content" class="form-control text-danger"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="file" asp-for="FeaturedImageURL" placeholder="Update Post Image" multiple class="form-control">
+            <span class="text-danger"></span><br>
+        </div>
+
+        <div class=form-row col-md-12>
+            <label asp-for="PostCategories" class="form-check-label">Pick Category/Categories your Post belongs</label>
+            <select asp-items="@Model.CategorySelectListItem" class="selectpicker" multiple data-live-search="true" asp-for="PostCategories">
+            </select>
+            <span class="text-danger" asp-validation-for="PostCategories"></span>
+        </div>
+        <div>
+            <input type="submit" value="Submit " class="btn btn-primary" />
+        </div>
+
+    </form>
+        }
+   </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>

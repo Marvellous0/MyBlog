@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MarvinBlogv._2._0.Models.Category> 
+
+@{
+    Layout = "BloggerDashboard";
+}
+
+@foreach(var category in Model) 
+{
+    @category.Name
+}
+
+

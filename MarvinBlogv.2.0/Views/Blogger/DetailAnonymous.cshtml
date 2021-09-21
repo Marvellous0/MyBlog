@@ -1,0 +1,102 @@
+﻿@model MarvinBlogv._2._0.DTO.PostDTo
+
+
+@{
+    ViewData["Title"] = "Post Detail";
+    var maxlength = 18;
+
+}
+
+<div style="margin-left:60px">
+    @if (Model.PostPerCategories.Count == 0)
+    {
+        <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@Model.Created"
+        style="font-size: 15px; margin-right: 10px; text-decoration: none; color: black"
+        class="font-weight-bold">@Model.PosterFullName</a>
+    
+
+            <a style="border-radius:20px; border-bottom:10px;" asp-controller="User"
+        asp-action="Login" class="btn btn-primary ">Follow</a>
+
+      
+    <h2 class="text-center font-weight-bold" style="font-family:'Times New Roman'">@Model.PostTitle</h2>
+    <img style="width:80%; height:500px; margin-left:15%" src="@WC.PostImagePath@Model.ImageUrl"
+        alt="image not found" />
+    <div>
+    <br />
+        <h5 class="text-center">@Model.Description</h5>
+           <br />
+        <div class="container" style="margin-left: 12%">
+            <span>@Html.Raw(@Model.Content)</span>
+        </div>
+        
+    </div><br />
+   
+    <hr /><br />
+    }
+    else
+    {
+<div class="row">
+    
+    <div class="col-lg-9 col-md-9 col-sm-9 justify-content-center">
+       
+        <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@Model.Created"
+        style="font-size:15px; margin-right: 10px;text-decoration:none; color:black"
+        class="font-weight-bold">@Model.PosterFullName</a>
+    
+
+             <a style="border-radius:20px; border-bottom:10px;" asp-controller="User"
+        asp-action="Login" class="btn btn-primary ">Follow</a>
+
+      
+
+    <h2 class="text-center font-weight-bold" style="font-family:'Times New Roman'">@Model.PostTitle</h2>
+    <img style="width:80%; height:500px; margin-left:15%" src="@WC.PostImagePath@Model.ImageUrl"
+        alt="image not found" />
+    <div>
+    <br />
+        <h5 class="text-center">@Model.Description</h5>
+           <br />
+        <div class="container" style="margin-left: 12%">
+            <span>@Html.Raw(Model.Content)</span>
+        </div>
+        
+    </div><br />
+   
+    <hr /><br />
+    </div>
+   
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        <br /><br /><br /><br /> <br /><br /><br /><br />
+        <h5 class=" font-weight-bolder" style="color:darkred; font-family:'Times New Roman'">RELATED TOPICS</h5>
+        @for (int i = 0; i < 5; i++)
+        {
+            @if (Model.PostPerCategories.Count > i)
+            {
+
+                <table>
+                    <tr>
+                        <td>
+                            <img style="height:50px; width:80px" src="@WC.PostImagePath@Model.PostPerCategories[i].FeaturedImageURL" />
+                        </td>
+                        <td style="margin-left:10px">
+                            <span class="font-weight-bold">
+                                @(Model.PostPerCategories[i].Title.Length> maxlength ? $"{Model.PostPerCategories[i].Title.Substring(0,maxlength)}..." : Model.PostPerCategories[i].Title ) <br />
+                                <a asp-controller="Blogger" asp-action="DetailAnonymous" asp-route-id="@Model.PostPerCategories[i].Id" style="color: grey;">
+                                    @(Model.PostPerCategories[i].Description.Length> maxlength ? $"{Model.PostPerCategories[i].Description.Substring(0,maxlength)}..." : Model.PostPerCategories[i].Description )
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <hr />
+            }
+        }
+
+    </div>
+</div>
+        
+    }
+
+
+</div>

@@ -1,0 +1,35 @@
+﻿@model MarvinBlogv._2._0.Models.Category 
+
+@{
+    Layout = "_AdminDashboardLayout";
+}
+    <div class="row justify-content-center">
+
+        <div class="card">
+            <div class="card-header">
+                <h1><i class="fas fa-edit"></i>Update Category</h1>
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" /><br />
+
+                <div class="form-group">
+                    <input asp-for="Name" placeholder="Update Category Name " class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span><br />
+                </div>
+
+                <div class="form-group">
+                    <input type="file" asp-for="ImageURL" placeholder="Update Category Image" multiple class="form-control">
+                    <span class="text-danger"></span><br>
+                    <div>
+                        <input type="submit" value="Submit " class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index"><i class="fas fa-backward"></i>Back to List</a>
+    </div>

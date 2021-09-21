@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MarvinBlogv._2._0.Models.Post>
+@{
+    Layout = "_AdminDashboardLayout";
+}
+
+@{
+    @foreach (var post in Model)
+    {
+
+        @if (post.Status == true)
+        {
+            @post.Title; <br /><br />
+            @post.Description;<br /><br />
+            @post.Content; <br /><br />
+            @post.CreatedAt;
+        }
+
+        else
+        {
+            <h1>No Post Approved</h1>
+        }
+    }
+}

@@ -1,0 +1,84 @@
+﻿@model List<MarvinBlogv._2._0.Models.ViewModel.LikeList>
+
+
+@if (ViewBag.Role == "SuperAdmin")
+{
+    Layout = "_AdminDashboardLayout";
+}
+else
+{
+    Layout = "BloggerDashboard";
+}
+
+@if (Model.Count() > 0)
+{
+    <div class="container">
+        <div class="container">
+            <div class="container">
+                <br />
+                <a style="color:grey; text-decoration:none" class="font-weight-bold" asp-controller="Blogger"
+                   asp-action="Detail" asp-route-id="@ViewBag.PostId"><i class="fas fa-backward"></i> Go Back</a>
+                <br /><br />
+                @foreach (var like in Model)
+                {
+                    @if (like.PosterRole == "SuperAdmin" && ViewBag.Role == "SuperAdmin")
+                    {
+                        <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <span style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+                 class="font-weight-bold">Me <span style=" color:deepskyblue; font-size:15px"><i class="fas fa-check-circle"></i></span></span>
+                    }
+
+
+                    else if (like.PosterRole == "SuperAdmin")
+                    {
+                        <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <span style="font-size:15px; margin-right: 5px;text-decoration:none; color:black"
+                  class="font-weight-bold">ADMIN</span><span style=" color:deepskyblue; font-size:15px"><i class="fas fa-check-circle"></i></span>
+                    }
+
+                    else
+                    {
+                        <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@like.UserId"
+                     style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+               class="font-weight-bold">@like.FullName</a>
+                                                                                                        }
+
+                    <a style="margin-left:20px"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a> <span class="font-weight-bold">1</span>
+                    @if (like.FullName != ViewBag.name && ViewBag.Role != "SuperAdmin" && like.PosterRole != "SuperAdmin")
+                    {
+                        @if (like.IsFollowing == false)
+                        {
+                            <a style="border-radius:20px; border-bottom:10px;" asp-route-id="@like.UserId" asp-controller="Blogger"
+                               asp-action="AddFollowerFromProfile" class="btn btn-primary float-right">Follow</a>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <br />
+                    }
+                    @if (like.IsFollowing == true)
+                    {
+
+                        <div style="color:grey; margin-left:30px; margin-top:-1%;font-size:15px; font-family:'Times New Roman'">
+                            <i class="fas fa-dot-circle"></i> Following
+                        </div>
+                    }
+
+                    <span style="margin-left: 20px; font-size: 10px" class="font-weight-bold">
+                        Liked at @like.CreatedAt.ToLongDateString()
+                        @like.CreatedAt.ToShortTimeString()
+                    </span>
+                    <br />
+                    <hr /><br />
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
+else
+{
+<h4 class="text-center font-weight-bold font-italic" style="color:grey; margin-top:250px">Be the first to like on this post</h4>
+}
+

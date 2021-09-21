@@ -1,0 +1,63 @@
+﻿@model List<MarvinBlogv._2._0.DTO.PostDTo>
+
+@if (ViewBag.Role == "SuperAdmin")
+{
+    Layout = "_AdminDashboardLayout";
+}
+else
+{
+    Layout = "BloggerDashboard";
+}
+
+
+
+<div class="container">
+    <span style="font-size:50px; color:grey"><i class="fas fa-user-circle"></i></span> <span style="font-size:30px" class="font-weight-bold">@ViewBag.name</span>
+    <br /><br /><hr />
+
+    <h3 class="font-weight-bold font-italic text-center" style="color:gray">@ViewBag.Category</h3><br />
+    @if (Model.Count() > 0)
+    {
+        @foreach (var post in Model)
+        {
+            <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@post.Created" style="font-size:15px; margin-right: 50px;text-decoration:none; color:black" class="font-weight-bold">@post.PosterFullName</a>
+            @foreach (var category in post.PostCategories)
+            {
+                <a style="border-radius:20px; margin-left: 20px; color:black; border-color:black" asp-controller="Category" asp-action="GetPostByCategoryId" asp-route-Id="@category.Id" class="font-weight-bold btn btn-outline-light">@category.Name</a>
+            }
+            if (post.CreatedBy != ViewBag.email && ViewBag.Role != "SuperAdmin")
+            {
+                @if (post.IsFollowing == false)
+                {
+                    <a style="border-radius:20px; border-bottom:10px;" asp-route-id="@post.Id" asp-controller="Blogger" asp-action="AddFollower" class="btn btn-primary float-right">Follow</a>
+
+                }
+
+            }
+            @if (post.IsFollowing == true && ViewBag.Role != "SuperAdmin")
+            {
+
+                <div style="color:grey; margin-left:30px; margin-top:-1%;font-size:15px; font-family:'Times New Roman'"><i class="fas fa-dot-circle"></i> Following</div>
+            }
+
+            <h2 class="text-center font-weight-bold" style="font-family:'Times New Roman'">@post.PostTitle</h2>
+            <img style="width:80%; height:500px; margin-left:15%" src="@WC.PostImagePath@post.ImageUrl" alt="image not found" />
+            <div>
+                <a style="color: black; margin-left: 10px" asp-controller="Blogger" asp-action="Detail" asp-route-id="@post.Id"><h5>@post.Description</h5></a>
+            </div><br />
+               <span style="margin-left: 20px; cursor: pointer" onclick="addLikes(@post.Id)">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                </span>
+                <span class="font-weight-bold" id=@($"post_likes_{post.Id}")>@post.Like</span> 
+            <span style="margin-left:20px; color:slategrey" asp-route-Id="@post.Id"><i class="fa fa-comment-alt" aria-hidden="true"></i></span> <span class="font-weight-bold">@post.CommentCount</span>
+            <br /><hr /><br />
+
+        }
+    }
+    else
+    {
+        <h4 class="text-center font-weight-bold font-italic" style="color:grey">No Posts have been made under this Category so far...</h4>
+    }
+
+
+</div>

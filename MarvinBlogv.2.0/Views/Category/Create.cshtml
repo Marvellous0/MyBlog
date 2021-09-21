@@ -1,0 +1,59 @@
+﻿
+@model MarvinBlogv._2._0.Models.ViewModel.CategoryViewModel.CreateCategoryViewModel
+
+@{
+    Layout = "_AdminDashboardLayout";
+
+    ViewBag.Title = "Category";
+}
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">
+                <i class="fas fa-plus"></i> &nbsp;Add Category
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Category Name:</label>
+                        <input type="text" asp-for="Name" class="form-control" placeholder="Enter Category Name" Required>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div><br><br>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Image:</label>
+                        <input type="file" name="files" asp-for="ImageURL" multiple class="form-control" Required>
+                        <span class="text-danger"></span><br>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-left">
+                    <div class="col">
+
+                        <input type="submit" asp-action="Create" class="btn btn-primary" value="Create">
+
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

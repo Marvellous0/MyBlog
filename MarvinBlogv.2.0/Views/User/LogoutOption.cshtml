@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "BloggerDashboard";
+}
+
+@{
+    <h4>Are you sure you want to Log Out?</h4>
+    <div>
+        <form method="get" onclick="return JSalert()">
+            <a class="btn btn-primary" asp-controller="User" asp-action="Logout">Yes</a>
+            <a class="btn btn-primary" asp-controller="Blogger" asp-action="Index">No</a>
+        </form>
+    </div>
+}
+
+<script>
+function JSalert() {
+
+    alertify.confirm("Are you sure, you want to log Out?", function (e) {
+
+        if (e == "Yes") {
+
+        <a class="btn btn-primary" asp-controller="User" asp-action="Logout">Yes</a>;
+
+        } else {
+
+        <a class="btn btn-primary" asp-controller="Blogger" asp-action="Index">No</a>;
+
+        }
+
+    });
+    }
+</script>

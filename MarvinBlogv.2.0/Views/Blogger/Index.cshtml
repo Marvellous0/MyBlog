@@ -1,0 +1,111 @@
+﻿@model List<MarvinBlogv._2._0.DTO.PostDTo>
+
+@if(ViewBag.Role == "SuperAdmin")
+{
+    Layout = "_AdminDashboardLayout";
+}
+else{
+    Layout = "BloggerDashboard";
+}
+
+
+<div class="container">
+    <span style="font-size:50px; color:grey"><i class="fas fa-user-circle"></i></span> <span style="font-size:30px"
+        class="font-weight-bold">@ViewBag.name</span>@if (ViewBag.Role == "SuperAdmin") { <span style="margin-left:10px; color:deepskyblue; font-size:30px"><i class="fas fa-check-circle"></i></span>} 
+    <a style="margin-left:35%" class="btn btn-outline-secondary" asp-controller="Post" asp-action="Create"><i
+            class="fas fa-plus"></i> Post</a>
+            @if(ViewBag.Role != "SuperAdmin")
+            {
+                <a class="btn btn-outline-secondary"  asp-controller="Blogger" asp-action="PendingPostPerUser">Pending Posts</a>
+            }
+
+                <a style="margin-right:30px" class="btn btn-outline-secondary" asp-controller="Post" asp-action="GetByUserNotificationList">Notifications(@ViewBag.NotificationCount)</a>
+            
+    <br /><br /><br />
+    <hr />
+    @if (Model.Count() > 0)
+    {
+        @foreach (var post in Model)
+        {
+            @if (post.PosterRole == "SuperAdmin" && ViewBag.Role == "SuperAdmin")
+            {
+                <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <span 
+        style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+        class="font-weight-bold">Me <span style=" color:deepskyblue; font-size:15px"><i class="fas fa-check-circle"></i></span></span>
+            }
+
+            else if (post.PosterRole == "SuperAdmin")
+            {
+                 <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <span 
+        style="font-size:15px; margin-right: 5px;text-decoration:none; color:black"
+        class="font-weight-bold">ADMIN</span><span style=" color:deepskyblue; font-size:15px"><i class="fas fa-check-circle"></i></span>
+            }
+
+            else
+            {
+
+                     <span style="font-size:30px; color:grey"><i class="fas fa-user-circle"></i></span> <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@post.Created"
+        style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+        class="font-weight-bold">@post.PosterFullName</a>
+
+
+            }
+        
+
+            @foreach (var category in post.PostCategories)
+            {
+              
+                <a style="border-radius:20px; margin-left: 20px; color:black; border-color:black" asp-controller="Category"
+                asp-action="GetPostByCategoryId" asp-route-Id="@category.Id"
+            class="font-weight-bold btn btn-outline-light">@category.Name</a>
+            }
+            if (post.CreatedBy != ViewBag.email && ViewBag.Role != "SuperAdmin" && post.PosterRole != "SuperAdmin")
+            {
+                @if (post.IsFollowing == false)
+                {
+                    <a style="border-radius:20px; border-bottom:10px;" asp-route-id="@post.Id" asp-controller="Blogger"
+                    asp-action="AddFollower" class="btn btn-primary float-right">Follow</a>
+
+                }
+
+            }
+            @if (post.IsFollowing == true && ViewBag.Role != "SuperAdmin" && post.PosterRole != "SuperAdmin")
+            {
+
+                <div style="color:grey; margin-left:30px; margin-top:-1%;font-size:15px; font-family:'Times New Roman'"><i
+            class="fas fa-dot-circle"></i> Following</div>
+            }
+
+            <h2 class="text-center font-weight-bold" style="font-family:'Times New Roman'">@post.PostTitle</h2>
+            <img style="width:80%; height:500px; margin-left:15%" src="@WC.PostImagePath@post.ImageUrl" alt="image not found" />
+            <div>
+                <a style="color: black; margin-left: 10px" asp-controller="Blogger" asp-action="Detail" asp-route-id="@post.Id">
+                    <h5 style="margin-left:50px; color:grey">@post.Description</h5>
+                </a>
+            </div><br />
+            <span style="margin-left:20px; cursor: pointer" onclick="addLikes(@post.Id)">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            </span> 
+            <span class="font-weight-bold" id=@($"post_likes_{post.Id}")>@post.Like</span>
+            <a style="margin-left:20px; color:slategrey" href="#"><i class="fa fa-comment-alt" aria-hidden="true"></i></a> <span class="font-weight-bold">@post.CommentCount</span>@post.Comment
+            <br />
+            <hr /><br />
+            
+        }
+    }
+    else
+    {
+        @if(ViewBag.Role != "SuperAdmin")
+        { 
+            <h4 class="text-center font-weight-bold font-italic" style="color:grey">No Posts <a asp-controller="Blogger" asp-action="ListUsers">Start Following Bloggers for Better Experience</a></h4>
+        }
+        else
+        {
+            <h4 class="text-center font-weight-bold font-italic" style="color:grey">No Posts Yet!!</h4>
+         }
+        
+    }
+
+
+</div>
+

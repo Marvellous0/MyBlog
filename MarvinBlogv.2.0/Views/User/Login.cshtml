@@ -1,0 +1,51 @@
+﻿@model MarvinBlogv._2._0.Models.ViewModel.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="container">
+
+        <h3>LOG IN</h3>
+
+        <form method="post">
+            <div class="input">
+                <div class="form-group col-md-5 mb-3">
+                    <i class="fa fa-user"> </i>
+                    <input type="text" asp-for="Email" style="border-radius:5px" class="form-control"
+                           placeholder="Email Address" required />
+                    <span asp-validation-for="Email" class="text-danger"></span><br><br />
+                </div>
+
+            </div>
+            <div>
+
+            </div>
+            <div class="input">
+                <div class="form-group col-md-5 mb-3">
+                    <i class="fa fa-lock"> </i>
+                    <input type="password" asp-for="Password" class="form-control" style="border-radius:5px"
+                           placeholder="Password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span><br>
+                </div><br /><br />
+
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn" style="background:hotpink" border-radius:5px;
+                           width:320px />
+                    <span class="mr-3">
+                        <div class="sign-up">
+                            Don't have an account? <a asp-controller="User" asp-action="Register">Sign Up</a>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

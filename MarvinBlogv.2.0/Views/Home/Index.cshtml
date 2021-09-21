@@ -1,0 +1,106 @@
+﻿@using SshNet.Security.Cryptography
+@model MarvinBlogv._2._0.Models.ViewModel.HomeVM
+
+
+@{
+    ViewData["Title"] = "Home";
+
+}
+
+<div class="page-wrapper container" style="display: flex; padding: 25px">
+    <div class="post-container" style="flex: 0 1 850px">
+        @foreach (var post in Model.Posts)
+        {
+            <div style="display: flex; flex-direction: column; margin-bottom: 20px; padding: 10px; box-shadow: 1px 0px 2px 0px #d2c6c6;">
+                <div style="display: flex; align-items: center">
+                    <span style="font-size:30px; color:grey; margin-right: 7px">
+                        <i class="fas fa-user-circle"></i>
+                    </span>
+                    <a asp-controller="Blogger" asp-action="UserProfile" asp-route-id="@post.Created"
+                       style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+                       class="font-weight-bold">
+                        @post.PosterFullName
+                    </a>
+                </div>
+                <div style="display: flex; margin: 10px 0px">
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between">
+                        <a asp-controller="Blogger" asp-action="DetailAnonymous" asp-route-id="@post.Id" class="float-left font-weight-bold" style="font-family:'Times New Roman'; color: black">@post.PostTitle</a>
+                        <a asp-controller="Blogger" asp-action="DetailAnonymous" asp-route-id="@post.Id" style="font-size: 15px; color: #6c757d">
+                            @post.Description
+
+                        </a>
+                        <div style="display: flex; align-items: center;">
+                            <span style="font-size: 15px">@post.CreatedAt.ToLongDateString()</span>
+                            <div style="margin-left: 10px">
+
+                                @foreach (var c in post.PostCategories)
+                                {
+                                    <span style="background-color: #efefef;  border-radius: 30px; padding: 5px; font-size: 10px ">@c.Name</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 0 1 40%">
+                        <a asp-route-Id="@post.Id" asp-controller="Blogger" asp-action="DetailAnonymous">
+                            <img style="" width="100%" src="@WC.PostImagePath@post.ImageUrl" />
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="post-container" style="flex: 0 1 50px">
+    </div>
+    <div class="sugessted-container" style="margin-left: 20px">
+        <div>
+            <br /><br />
+            <h5 class="font-weight-bold" style="font-family:'Times New Roman'">Suggested Topics</h5><hr />
+            <div>
+                @foreach (var category in Model.Categories)
+                {
+                    <a asp-action="GetPostByCategoryId" asp-controller="Home" asp-route-Id="@category.Id" style="background-color: #efefef; text-decoration: none; color: black; border-radius: 30px; padding: 5px; font-size: 18px; margin: 0px 10px;margin-bottom: 10px">@category.Name</a>
+                }
+            </div>
+        </div><br /><br /><br /><br />
+        <div>
+            <h5 class="font-weight-bold" style="font-family:'Times New Roman'">Who to follow</h5><hr />
+            @foreach (var user in Model.Users)
+            {
+                int i = 1;
+                @if (i < 5)
+                {
+                    <div style="display: flex; flex-direction: column; margin-bottom: 20px; padding: 10px; ">
+                        <div style="display: flex; align-items: center">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span style="font-size:30px; color:grey; margin-right: 7px">
+                                            <i class="fas fa-user-circle"></i>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:15px; margin-right: 50px;text-decoration:none; color:black"
+                                              class="font-weight-bold">
+                                            @user.FullName
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <a style="border-radius:20px; border-bottom:10px; font-size:10px" asp-controller="User" asp-action="Login" class="btn btn-primary">Follow</a>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                }
+
+                i++;
+            }
+        </div>
+    </div>
+</div>

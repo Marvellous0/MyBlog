@@ -1,0 +1,84 @@
+﻿@model IEnumerable<MarvinBlogv._2._0.Models.Post>
+
+@{
+    Layout = "_AdminDashboardLayout";
+}
+
+<h3>Welome @ViewBag.email</h3>
+
+<div class="container">
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                @*<th>Content</th>*@
+                                <th>Description</th>
+                                <th>Featured Image</th>
+                                <th>Created At</th>
+                                <th>Created By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var post in Model)
+                            {
+                              
+                            <tr>
+                                <td> @post.Title </td>
+                                @*<td>@post.Content</td>*@
+                                <td>@post.Description </td>
+                                <td><img src="@WC.PostImagePath@post.FeaturedImageURL" /> </td>
+                                <td>@post.CreatedAt </td>
+                                <td>@post.CreatedBy </td>
+                                <td>
+                                    <a class="btn btn-success" asp-controller="Post" asp-action="IsApproved" asp-route-id="@post.Id"><i class="fas fa-check"></i></a>
+                                    @*<a class="btn btn-danger" asp-action="Detail" asp-route-id="@review.Id">Details</a>*@
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @*@foreach (var post in Model)
+                {
+                    <div class="col-4 mb-4 col-lg-4 justify-content-center">
+                        <div class="card">
+                            <div class="card-header text-center ">
+                                <h5><b class="card-title" style="color:black">@post.CreatedBy </b></h5>
+
+                                <div class="card-body">
+                                    <div class="card"></div>
+                                    <img width="200" height="150" src="@WC.ImagePath@post.ImageURL" />
+                                </div>
+
+                                <div>
+                                    <h3>
+                                        @post.Title
+                                    </h3>
+                                </div>
+
+                                <div>
+                                    @post.Content
+                                </div>
+
+                                @post.CreatedAt
+                            </div>
+                        </div>
+                    </div>
+                    <a class="text-secondary" asp-controller="Post" asp-action="IsApproved" asp-route-id="@post.Id"> Approve</a>
+                }
+            }*@
+        }
+
+        else
+        {
+            <p> No Post exists.</p>
+        }
+    </div>
+</div>

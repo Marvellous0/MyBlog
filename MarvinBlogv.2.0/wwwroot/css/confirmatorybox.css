@@ -1,0 +1,14 @@
+﻿body {
+}
+
+p {
+    border: double 8px red;
+    font-size: 28px;
+    color: green;
+    text-align: justify;
+}
+
+h1 {
+    color: blue;
+    text-align: center;
+}
